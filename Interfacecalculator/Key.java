@@ -1,0 +1,5 @@
+package Interfacecalculator;
+
+interface Key {
+    
+}
