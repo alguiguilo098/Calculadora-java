@@ -7,6 +7,6 @@ import Exeception.DisplayException;
  */
 public interface IDisplay {
     void show(Digits digit)throws DisplayException;
-    void setsignal();
+    void setsignal(Operation signal)throws DisplayException;
     void clear();
 }

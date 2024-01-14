@@ -1,17 +1,17 @@
 import Implementacao.Display;
+import Implementacao.Keybord;
+import Implementacao.Key.KeyDigit;
 import Interfacecalculator.IDisplay;
+import Interfacecalculator.IKey;
+import Interfacecalculator.IKeybord;
 import Interfacecalculator.Digits;
+import Interfacecalculator.Operation;
 public class main {
     public static void main(String[] args) {
        IDisplay d=new Display();
-       try {
-            d.show(Digits.ONE);
-            d.show(Digits.TWO);
-            Thread.sleep(10000);
-            d.clear(); 
-        
+       IKeybord k= new Keybord();
+       try { 
        } catch (Exception e) {
-        // TODO: handle exception
        }
     }   
 }

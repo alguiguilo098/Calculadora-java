@@ -3,7 +3,7 @@ package Implementacao;
 import Exeception.DisplayException;
 import Interfacecalculator.Digits;
 import Interfacecalculator.IDisplay;
-
+import Interfacecalculator.Operation;
 public class Display implements IDisplay {
     int x=5;
     int y=0;
@@ -205,8 +205,42 @@ public class Display implements IDisplay {
         }
     }
     @Override
-    public void setsignal() {
-        
+    public void setsignal(Operation signal) throws DisplayException {
+        switch (signal) {
+            case POINT:
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("   00");
+                Graphics.gotoXY(x++,y);
+                System.out.print("   00");
+                Graphics.gotoXY(x++,y);
+                this.x=5;
+                this.y+=8;
+                break;
+            case SIGNAL:
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("00000");
+                Graphics.gotoXY(x++,y);
+                System.out.print("    ");
+                Graphics.gotoXY(x++,y);
+                System.out.print("     ");
+                Graphics.gotoXY(x++,y);
+                this.x=5;
+                this.y+=8;
+                break;
+            default:
+                throw new DisplayException("Operation not found");
+        }
     }
+    
     
 }
