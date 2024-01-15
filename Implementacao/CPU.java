@@ -31,7 +31,7 @@ public class CPU implements ICPU {
         }        
     }
     Operation operation;
-    boolean isregister1=true;
+    public boolean isregister1=true;
     Register register1=new Register(0, false, 0);
     Register register2= new Register(0, false, 0);
     public Double getregister1(){
@@ -44,24 +44,38 @@ public class CPU implements ICPU {
     public void recive(Digits digit) {
         if (isregister1) {
             if (register1.ispoint==false) {
-                register1.value=register1.value*Math.pow(10, this.register1.pot>0?1:0)+digit.get_value();
+                if (register1.value>0 || register1.value==0.0) {
+                    register1.value=register1.value*Math.pow(10, this.register1.pot>0?1:0)+digit.get_value();
+                }else{
+                    register1.value=register1.value*Math.pow(10, this.register1.pot>0?1:0)-digit.get_value();
+                }
                 register1.incremet_pot();
-            }else{        
-                register1.value=register1.value+Math.pow(10, this.register1.pot)*digit.get_value();
+            }else{
+                if (register1.value>0 ||register1.value==0.0) {
+                    register1.value=register1.value+Math.pow(10, this.register1.pot)*digit.get_value();
+                }else{
+                    register1.value=register1.value-Math.pow(10, this.register1.pot)*digit.get_value();
+                }
                 register1.decrement_pot();
             }
         }else{
             if (register2.ispoint==false) {
-                register1.value=register1.value*Math.pow(10, this.register1.pot>0?1:0)+digit.get_value();
-                register1.incremet_pot();
+                if (register2.value>0 || register2.value==0.0) {
+                    register2.value=register2.value*Math.pow(10, this.register2.pot>0?1:0)+digit.get_value();
+                }else{
+                    register2.value=register2.value*Math.pow(10, this.register2.pot>0?1:0)-digit.get_value();
+                }
+                register2.incremet_pot();
             }else{
-                register2.value=register2.value+Math.pow(10, this.register2.pot)*digit.get_value();
+                if (register1.value>0 ||register1.value==0.0) {
+                    register1.value=register1.value+Math.pow(10, this.register1.pot)*digit.get_value();
+                }else{
+                    register1.value=register1.value-Math.pow(10, this.register1.pot)*digit.get_value();
+                }
                 register1.decrement_pot();
             }
             }
         }
-    }
-
     @Override
     public void recive(Operation operator) {
         switch (operator) {
@@ -69,12 +83,18 @@ public class CPU implements ICPU {
                 if (isregister1) {
                     this.register1.value=-this.register1.value;
                 } else {
-                    this.register1.value=-this.register1.value;
+                    this.register2.value=-this.register1.value;
                 }
                 break;
-            case ADD:
-                
+            case POINT:
+                if (isregister1) {
+                    this.register1.ispoint=true;
+                    this.register1.point();
+                }else{
+                    this.register2.ispoint=true;
+                    this.register2.point();
+                }
                 break;
+            }
         }
-    }
 }
