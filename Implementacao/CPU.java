@@ -7,8 +7,6 @@ import Interfacecalculator.IKeybord;
 import Interfacecalculator.Operation;
 
 public class CPU implements ICPU {
-    private Display display;
-    
     public class Register{
         Double value;
         boolean signal;
@@ -28,12 +26,29 @@ public class CPU implements ICPU {
         }
         void decrement_pot(){
             this.pot--;
+        }
+        void clear(){
+            this.signal=false;
+            this.ispoint=false;
+            this.pot=0;
+            this.value=0.0;
         }        
     }
-    Operation operation;
-    public boolean isregister1=true;
-    Register register1=new Register(0, false, 0);
-    Register register2= new Register(0, false, 0);
+    
+    private Display display;
+    private Operation operation=Operation.ADD;
+    private boolean isregister1=true;
+    private Register register1=new Register(0, false, 0);
+    private Register register2= new Register(0, false, 0);
+    private void swapisregister(){
+        this.isregister1=this.isregister1==true?false:true;
+    }
+
+    private void reset(){
+        this.register1.clear();
+        
+        this.isregister1=true;
+    }
     public Double getregister1(){
         return this.register1.value;
     }
@@ -76,6 +91,29 @@ public class CPU implements ICPU {
             }
             }
         }
+    private void equal(){
+        if (this.operation==Operation.ADD) {
+            this.register1.value=this.register2.value+this.register1.value;
+            this.register2.clear();
+        } else if (this.operation==Operation.MULTIPLICATION) {
+            this.register1.value=this.register1.value*this.register2.value;
+            this.register2.clear();
+        } else if (this.operation==Operation.SUBTRACTION) {
+            this.register1.value=this.register1.value-this.register2.value;
+            this.register2.clear();
+        }else if (this.operation==Operation.SQRT) {
+            this.register1.value=Math.sqrt(this.register1.value);
+            this.register2.clear();
+        }else if (this.operation==Operation.PERCENTAGE) {
+            this.register1.value=this.register1.value/100;
+            this.register2.clear();
+        }else if (this.operation==Operation.DIVISION) {
+            if(this.register1.value!=0){
+                this.register1.value=this.register1.value/this.register2.value;
+                this.register2.clear();
+            }
+        }
+    }
     @Override
     public void recive(Operation operator) {
         switch (operator) {
@@ -94,6 +132,34 @@ public class CPU implements ICPU {
                     this.register2.ispoint=true;
                     this.register2.point();
                 }
+                break;
+            case EQUAL:
+                this.equal();
+                break;  
+            case ADD:
+                this.swapisregister();
+                if(this.isregister1)this.equal(); 
+                this.operation=Operation.ADD;
+                break;
+            case SUBTRACTION:
+                this.swapisregister();
+                if(this.isregister1)this.equal(); 
+                this.operation=Operation.SUBTRACTION;
+                break;
+            case MULTIPLICATION:
+                this.swapisregister();
+                if(this.isregister1)this.equal(); 
+                this.operation=Operation.MULTIPLICATION;
+                break;
+            case DIVISION:
+                this.swapisregister();
+                if(this.isregister1==false)this.equal();  
+                this.operation=Operation.DIVISION;
+                break;
+            case CLEAR:
+                this.reset();
+                break;
+            default:
                 break;
             }
         }

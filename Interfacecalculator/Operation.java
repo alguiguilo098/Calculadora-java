@@ -2,9 +2,9 @@ package Interfacecalculator;
 
 public enum Operation {
     ADD(0),SUBTRACTION(1),
-    MULTIPLICATION(3),POINT(4),
-    SQRT(5),PERCENTAGE(6),SIGNAL(10),
-    EQUAL(11);
+    MULTIPLICATION(3),POINT(4),DIVISION(5),
+    SQRT(6),PERCENTAGE(7),SIGNAL(8),
+    EQUAL(9),CLEAR(10);
     
     int value;
     Operation(int value){
