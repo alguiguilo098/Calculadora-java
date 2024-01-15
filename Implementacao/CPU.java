@@ -165,10 +165,18 @@ public class CPU implements ICPU {
                 this.operation=Operation.SUBTRACTION;
                 break;
             case MULTIPLICATION:
+                if (this.count_operation==0) {
+                    swapisregister();
+                }
+                this.count_operation++;
                 if(this.isregister1==false)this.equal(); 
                 this.operation=Operation.MULTIPLICATION;
                 break;
             case DIVISION:
+                if (this.count_operation==0) {
+                    swapisregister();
+                }
+                this.count_operation++;
                 if(this.isregister1==false)this.equal();  
                 this.operation=Operation.DIVISION;
                 break;
@@ -179,10 +187,36 @@ public class CPU implements ICPU {
                 break;
             }
         }
-        private void showvalue(Double value) throws DisplayException{
+        private void showvalue(Double value) throws 
+        DisplayException,CPUException{
             String valuestring=value.toString();
             for (int i = 0; i < valuestring.length(); i++) {
                 switch (valuestring.charAt(i)) {
+                    case '.':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.setsignal(Operation.POINT);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '-':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.setsignal(Operation.SIGNAL);
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
                     case '1':
                         try {
                             if (this.display==null) {
@@ -190,11 +224,127 @@ public class CPU implements ICPU {
                             }
                             this.display.show(Digits.ONE);
 
-                        } catch (CPUException e) {
-                            System.err.println(e.getMessage());
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
                         }
                         break;
-                
+                    case '2':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.TWO);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case'3':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.THREE);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '4':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.FOUR);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '5':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.FIVE);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '6':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.SIX);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '7':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.SEVEN);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '8':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.EIGHT);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                        break;
+                    case '9':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.NINE);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
+                    case '0':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.ZERO);
+
+                        } catch (DisplayException display) {
+                            System.err.println(display.getMessage());
+                        }catch (CPUException cpu) {
+                            System.err.println(cpu.getMessage());
+                        }
                     default:
                         break;
                 }
