@@ -1,9 +1,10 @@
 package Implementacao;
 
+import Exeception.CPUException;
+import Exeception.DisplayException;
 import Interfacecalculator.Digits;
 import Interfacecalculator.ICPU;
-import Interfacecalculator.IKey;
-import Interfacecalculator.IKeybord;
+import Interfacecalculator.IDisplay;
 import Interfacecalculator.Operation;
 
 public class CPU implements ICPU {
@@ -35,26 +36,35 @@ public class CPU implements ICPU {
         }        
     }
     
-    private Display display;
+    private IDisplay display;
     private Operation operation=Operation.ADD;
     private boolean isregister1=true;
+    private int count_operation=0;
     private Register register1=new Register(0, false, 0);
     private Register register2= new Register(0, false, 0);
+
     private void swapisregister(){
-        this.isregister1=this.isregister1==true?false:true;
+        if (this.isregister1==true) {
+            this.isregister1=false;
+        }else{
+            this.isregister1=true;
+        }
     }
 
     private void reset(){
         this.register1.clear();
-        
+        this.register2.clear();        
         this.isregister1=true;
     }
+
     public Double getregister1(){
         return this.register1.value;
     }
+
     public Double getregister2(){
         return this.register2.value;
     }
+
     @Override
     public void recive(Digits digit) {
         if (isregister1) {
@@ -134,25 +144,31 @@ public class CPU implements ICPU {
                 }
                 break;
             case EQUAL:
+                this.swapisregister();
+                this.count_operation=0;
                 this.equal();
                 break;  
             case ADD:
-                this.swapisregister();
-                if(this.isregister1)this.equal(); 
+                if (this.count_operation==0) {
+                    swapisregister();
+                }
+                this.count_operation++;
+                if(this.isregister1==false)this.equal(); 
                 this.operation=Operation.ADD;
                 break;
             case SUBTRACTION:
-                this.swapisregister();
-                if(this.isregister1)this.equal(); 
+                if (this.count_operation==0) {
+                    swapisregister();
+                }
+                this.count_operation++;
+                if(this.isregister1==false)this.equal(); 
                 this.operation=Operation.SUBTRACTION;
                 break;
             case MULTIPLICATION:
-                this.swapisregister();
-                if(this.isregister1)this.equal(); 
+                if(this.isregister1==false)this.equal(); 
                 this.operation=Operation.MULTIPLICATION;
                 break;
             case DIVISION:
-                this.swapisregister();
                 if(this.isregister1==false)this.equal();  
                 this.operation=Operation.DIVISION;
                 break;
@@ -162,5 +178,30 @@ public class CPU implements ICPU {
             default:
                 break;
             }
+        }
+        private void showvalue(Double value) throws DisplayException{
+            String valuestring=value.toString();
+            for (int i = 0; i < valuestring.length(); i++) {
+                switch (valuestring.charAt(i)) {
+                    case '1':
+                        try {
+                            if (this.display==null) {
+                                throw new CPUException("Não foi possível encontrar o display");
+                            }
+                            this.display.show(Digits.ONE);
+
+                        } catch (CPUException e) {
+                            System.err.println(e.getMessage());
+                        }
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
+        }
+        @Override
+        public void setdisplay(IDisplay display) {
+            this.display=display;
         }
 }

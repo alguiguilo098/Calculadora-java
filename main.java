@@ -20,6 +20,8 @@ public class main {
         cpu.recive(Digits.EIGHT);
         cpu.recive(Operation.ADD);
         cpu.recive(Digits.TWO);
+        cpu.recive(Operation.ADD);
+        cpu.recive(Digits.TWO);
         cpu.recive(Operation.EQUAL);
         System.out.println(cpu.getregister1());
         System.out.println(cpu.getregister2());
