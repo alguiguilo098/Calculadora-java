@@ -9,8 +9,8 @@ import Interfacecalculator.Operation;
 
 public class CPU implements ICPU {
     public class Register{
-        Double value;
-        boolean signal;
+        private Double value;
+        private boolean signal;
         boolean ispoint;
         int pot;
         public Register(int value,boolean signal, int pot){
@@ -147,6 +147,12 @@ public class CPU implements ICPU {
                 this.swapisregister();
                 this.count_operation=0;
                 this.equal();
+                try {
+                    this.showvalue(getregister1());
+                    Thread.sleep(10000);
+                } catch (Exception e) {
+                }
+                this.display.clear();
                 break;  
             case ADD:
                 if (this.count_operation==0) {
@@ -155,6 +161,7 @@ public class CPU implements ICPU {
                 this.count_operation++;
                 if(this.isregister1==false)this.equal(); 
                 this.operation=Operation.ADD;
+                this.display.clear();
                 break;
             case SUBTRACTION:
                 if (this.count_operation==0) {
@@ -182,13 +189,15 @@ public class CPU implements ICPU {
                 break;
             case CLEAR:
                 this.reset();
+                this.display.clear();
                 break;
             default:
                 break;
             }
         }
         private void showvalue(Double value) throws 
-        DisplayException,CPUException{
+        DisplayException,
+        CPUException{
             String valuestring=value.toString();
             for (int i = 0; i < valuestring.length(); i++) {
                 switch (valuestring.charAt(i)) {
@@ -345,8 +354,6 @@ public class CPU implements ICPU {
                         }catch (CPUException cpu) {
                             System.err.println(cpu.getMessage());
                         }
-                    default:
-                        break;
                 }
             }
         }

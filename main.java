@@ -11,20 +11,15 @@ public class main {
        IKeybord k= new Keybord();
        CPU cpu=new CPU();
        try { 
-        cpu.recive(Digits.NINE);
-        cpu.recive(Digits.NINE);
-        cpu.recive(Digits.NINE);
-        cpu.recive(Digits.EIGHT);
-        cpu.recive(Operation.POINT);
-        cpu.recive(Digits.EIGHT);
-        cpu.recive(Digits.EIGHT);
+        cpu.setdisplay(d);
+        cpu.recive(Digits.ONE);
+        cpu.recive(Digits.ONE);
+        cpu.recive(Digits.ONE);
+        cpu.recive(Operation.SIGNAL);
         cpu.recive(Operation.ADD);
-        cpu.recive(Digits.TWO);
-        cpu.recive(Operation.ADD);
-        cpu.recive(Digits.TWO);
+        cpu.recive(Digits.ONE);
+        cpu.recive(Digits.ONE);
         cpu.recive(Operation.EQUAL);
-        System.out.println(cpu.getregister1());
-        System.out.println(cpu.getregister2());
        } catch (Exception e) {
        }
     }   
