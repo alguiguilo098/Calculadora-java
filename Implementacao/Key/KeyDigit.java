@@ -1,5 +1,6 @@
 package Implementacao.Key;
 import Interfacecalculator.IKey;
+import Exeception.CPUException;
 import Interfacecalculator.Digits;
 import Interfacecalculator.IKeybord;
 public class KeyDigit implements IKey {
@@ -8,8 +9,15 @@ public class KeyDigit implements IKey {
     public KeyDigit(Digits digit){
         this.digit=digit;
     }
+    public void setkeybord(IKeybord keybord){
+        this.keybord=keybord;
+    }
     @Override
-    public void press() {
-        System.out.println(this.digit.toString());
+    public void press(){
+        try {
+            this.keybord.getcpu().recive(this.digit);
+        } catch (CPUException e) {
+            System.err.println(e.getMessage());
+        }
     }    
 }

@@ -6,21 +6,17 @@ import Interfacecalculator.IKeybord;
 import Interfacecalculator.Operation;
 import Interfacecalculator.Digits;
 public class main {
+
     public static void main(String[] args) {
-       IDisplay d=new Display();
-       IKeybord k= new Keybord();
-       CPU cpu=new CPU();
        try { 
-        cpu.setdisplay(d);
-        cpu.recive(Digits.ONE);
-        cpu.recive(Digits.ONE);
-        cpu.recive(Digits.ONE);
-        cpu.recive(Operation.SIGNAL);
-        cpu.recive(Operation.ADD);
-        cpu.recive(Digits.ONE);
-        cpu.recive(Digits.ONE);
-        cpu.recive(Operation.EQUAL);
-       } catch (Exception e) {
+        Calculator c=new Calculator();
+        c.getkeybord().getkey("ONE").press();
+        c.getkeybord().getkey("TWO").press();
+        c.getkeybord().getkey("TWO").press();
+        c.getkeybord().getkey(Operation.PERCENTAGE).press();
+        c.getkeybord();
+    } catch (Exception e) {
+        System.err.println("java");
        }
     }   
 }

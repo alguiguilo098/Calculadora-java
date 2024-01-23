@@ -127,6 +127,16 @@ public class CPU implements ICPU {
     @Override
     public void recive(Operation operator) {
         switch (operator) {
+            case PERCENTAGE:
+                swapisregister();
+                this.equal();
+                try {
+                    this.showvalue(getregister1());
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                }
+                this.display.clear();
+                break;
             case SIGNAL:
                 if (isregister1) {
                     this.register1.value=-this.register1.value;
@@ -190,8 +200,6 @@ public class CPU implements ICPU {
             case CLEAR:
                 this.reset();
                 this.display.clear();
-                break;
-            default:
                 break;
             }
         }

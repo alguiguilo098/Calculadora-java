@@ -1,5 +1,7 @@
 package Interfacecalculator;
 
+import Exeception.CPUException;
+
 public interface IKey {
-    void press();
+    void press() throws CPUException;
 }
